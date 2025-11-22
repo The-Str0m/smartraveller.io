@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaflet Map</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <style>
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script>
+    const map = L.map('map').setView([61.4971, 23.7526], 13);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19
+    }).addTo(map);
+    
+    const markers = new Map();
+    
+    async function updateMarkers() {
+        try {
+            const res = await fetch("http://localhost:8080/buses");
+            if (!res.ok) {
+                console.error(`http error, status - ${res.status}`);
+                return;
+            }
+            const buses = await res.json();
+            
+            if (!Array.isArray(buses) || buses.length === 0) {
+                console.log("no bus data");
+                return;
+            }
+            
+            const currentBusIds = new Set(buses.map(bus => bus.id));
+            
+            for (const [busId, marker] of markers.entries()) {
+                if (!currentBusIds.has(busId)) {
+                    map.removeLayer(marker);
+                    markers.delete(busId);
+                }
+            }
+            
+            buses.forEach(bus => {
+                if (markers.has(bus.id)) {
+                    markers.get(bus.id).setLatLng([bus.lat, bus.lng]);
+                } 
+                else {
+                    const marker = L.marker([bus.lat, bus.lng], {
+                        title: `Bus ${bus.id}`
+                    }).addTo(map);
+                    
+                    marker.bindPopup(`Bus ID: ${bus.id}`);
+                    markers.set(bus.id, marker);
+                }
+            });
+            
+            console.log(`updated ${buses.length} bus markers`);
+        } 
+        catch (error) {
+            console.error("error fetching buses - ", error);
+        }
+    }
+    
+    setInterval(updateMarkers, 1000);
+    updateMarkers();
+</script>
+
+</body>
+</html>
