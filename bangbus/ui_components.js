@@ -1,4 +1,4 @@
-import { bmtcTypes, popularRoutes } from './data_service.js';
+import { kannadaPhrases, popularRoutes } from './data_service.js';
 
 export function Header(currentTheme, label) {
     return `
@@ -8,7 +8,7 @@ export function Header(currentTheme, label) {
                     <i data-lucide="navigation" class="w-5 h-5 md:w-6 md:h-6"></i>
                 </div>
                 <h1 class="text-lg md:text-2xl font-display font-bold glow-text tracking-tight">
-                    Travler <span class="text-[var(--accent-primary)]">Navigator</span>
+                    BANG! <span class="text-[var(--accent-primary)]">Navigator</span>
                 </h1>
             </div>
             <button id="theme-toggle" aria-label="Switch Theme" class="flex items-center space-x-2 px-3 py-2 md:px-4 rounded-full border border-[var(--glass-border)] hover:bg-[var(--glass-border)] focus:ring-2 focus:ring-[var(--accent-primary)] transition-all duration-300 group">
@@ -18,7 +18,7 @@ export function Header(currentTheme, label) {
         </div>
     `;
 }
-//A project by NTA and Pranav Soggy 
+//a project by NTA n Pranavoggy 
 export function SearchPanel() {
     return `
         <div class="glass-panel p-6 md:p-8 transform hover:scale-[1.01] transition-transform duration-500">
@@ -57,48 +57,41 @@ export function SearchPanel() {
 }
 
 export function MapContainer() {
-    return `
-        <div class="glass-panel w-full h-full relative overflow-hidden group border border-[var(--glass-border)]">
-            <div class="absolute top-4 left-4 z-20">
-                <div class="bg-[var(--card-bg)] backdrop-blur-md px-4 py-2 rounded-full border border-[var(--accent-primary)] shadow-lg flex items-center gap-2">
-                    <span class="relative flex h-3 w-3">
-                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--accent-primary)] opacity-75"></span>
-                      <span class="relative inline-flex rounded-full h-3 w-3 bg-[var(--accent-primary)]"></span>
-                    </span>
-                    <span class="text-[var(--text-primary)] font-mono text-xs font-bold tracking-wider">LIVE TRACKING</span>
-                </div>
-            </div>
-            
-            <div id="gmap-frame-wrapper" class="w-full h-full">
-    <!-- iframe will be injected here -->
+  return `
+    <div class="w-full flex flex-col gap-6">
 
-
-                </div>
-            </div>
+        <!-- LEAFLET MAP -->
+        <div id="leaflet-map"
+             class="w-full h-[450px] md:h-[500px] rounded-xl overflow-hidden border border-[var(--glass-border)]">
         </div>
-        <div class="w-full h-full flex flex-col gap-4">
 
-    <!-- Existing Google Map -->
-    <div id="google-map-wrapper" class="h-1/2 rounded-xl overflow-hidden"></div>
-
-    <!-- NEW Leaflet Map -->
-    <div id="leaflet-map" class="h-1/2 rounded-xl overflow-hidden"></div>
-
-</div>
-
-    `;
+        <!-- ROUTE INSTRUCTIONS BOX -->
+        <div id="route-instructions"
+             class="glass-panel w-full p-6 md:p-8 rounded-xl border-2 border-[var(--accent-primary)] shadow-2xl hidden mb-8">
+            <h3 class="text-2xl font-display font-bold mb-6 flex items-center gap-3 text-[var(--text-primary)]">
+                <div class="p-2 rounded-lg bg-[var(--accent-primary)] text-white">
+                    <i data-lucide="bus" class="w-6 h-6"></i>
+                </div>
+                Your Bus Route
+            </h3>
+            <div id="route-instructions-content" class="space-y-4"></div>
+        </div>
+    </div>
+  `;
 }
 
+
 export function InfoSection() {
-    const typesHtml = bmtcTypes.map(bus => `
+    const phrasesHtml = kannadaPhrases.map(phrase => `
         <div class="group p-4 rounded-xl border border-[var(--glass-border)] hover:bg-[var(--glass-border)] transition-all duration-300">
             <div class="flex items-start gap-4">
                 <div class="p-2.5 rounded-lg bg-[var(--accent-glow)] text-[var(--accent-primary)] shadow-sm">
-                    <i data-lucide="${bus.icon}" class="w-5 h-5"></i>
+                    <i data-lucide="${phrase.icon}" class="w-5 h-5"></i>
                 </div>
-                <div>
-                    <h4 class="font-bold text-[var(--text-primary)] text-base group-hover:text-[var(--accent-primary)] transition-colors">${bus.name}</h4>
-                    <p class="text-sm text-[var(--text-secondary)] mt-1 leading-relaxed opacity-90">${bus.desc}</p>
+                <div class="flex-1">
+                    <h4 class="font-bold text-[var(--text-primary)] text-lg mb-1">${phrase.kannada}</h4>
+                    <p class="text-sm text-[var(--text-secondary)] mb-0.5">${phrase.english}</p>
+                    <p class="text-xs text-[var(--text-secondary)] opacity-75 italic">${phrase.pronunciation}</p>
                 </div>
             </div>
         </div>
@@ -120,15 +113,15 @@ export function InfoSection() {
     `).join('');
 
     return `
-        <!-- Card 1: Bus Types -->
+        <!-- Card 1: Kannada Phrases Guide -->
         <article class="glass-panel overflow-hidden flex flex-col h-full collapsible-card">
             <div class="p-6 md:p-8 border-b border-[var(--glass-border)] flex justify-between items-center cursor-pointer md:cursor-default toggle-header">
-                <h3 class="text-lg md:text-xl font-display font-bold text-[var(--text-primary)]">Bus Types</h3>
+                <h3 class="text-lg md:text-xl font-display font-bold text-[var(--text-primary)]">Kannada Phrases Guide</h3>
                 <i data-lucide="chevron-down" class="w-5 h-5 text-[var(--text-secondary)] md:hidden chevron"></i>
             </div>
             <div class="details-content flex-grow">
                 <div class="p-6 md:p-8 pt-4 space-y-3">
-                    ${typesHtml}
+                    ${phrasesHtml}
                 </div>
             </div>
         </article>
