@@ -1,17 +1,17 @@
 :root {
-    /* Base Theme (Dark / Futuristic Green) */
-    --bg-grad-start: #022c22;  /* Teal 950 */
-    --bg-grad-mid: #064e3b;    /* Emerald 900 */
-    --bg-grad-end: #0f172a;    /* Slate 900 */
+    
+    --bg-grad-start: #022c22;
+    --bg-grad-mid: #064e3b;    
+    --bg-grad-end: #0f172a;    
     
     --glass-bg: rgba(6, 78, 59, 0.2);
     --glass-border: rgba(52, 211, 153, 0.2);
     --glass-blur: 20px;
     
-    --text-primary: #ecfdf5;   /* Emerald 50 */
-    --text-secondary: #6ee7b7; /* Emerald 300 */
+    --text-primary: #ecfdf5;   
+    --text-secondary: #6ee7b7; 
     
-    --accent-primary: #4ade80; /* Green 400 */
+    --accent-primary: #4ade80; 
     --accent-glow: rgba(74, 222, 128, 0.5);
     
     --card-bg: rgba(2, 44, 34, 0.6);
@@ -58,7 +58,7 @@
     --shadow-color: transparent;
 }
 
-/* global Styles plus Reset */
+
 *, *::before, *::after {
     box-sizing: border-box;
 }
@@ -90,7 +90,7 @@ body {
     100% { background-position: 0% 50%; }
 }
 
-/* Components */
+
 .glass-panel {
     background: var(--glass-bg);
     backdrop-filter: blur(var(--glass-blur));
@@ -276,4 +276,9 @@ body {
 }
 .collapsed .chevron {
     transform: rotate(-90deg);
+}
+
+/* Hide default Leaflet routing container */
+.leaflet-routing-container-hide {
+    display: none !important;
 }
