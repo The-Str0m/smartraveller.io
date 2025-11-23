@@ -62,4 +62,5 @@ The third-party assets, libraries, and tools used include -
 
 ## Credits
 Pranav - created the mapping system and created the algorithm for estimating congestion inside the bus
+
 Neil - created the website, routing integration, and the translation features
